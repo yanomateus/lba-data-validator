@@ -1,0 +1,3 @@
+[run]
+source = lba_data_validator
+omit = lba_data_validator/test*
