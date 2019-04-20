@@ -25,3 +25,5 @@ class BiosphereAtmosphereRead(Base, CreatedUpdateMixin):
     soil_temperature_at_10_cm_depth = Column(Float)
     soil_temperature_at_20_cm_depth = Column(Float)
     soil_temperature_at_50_cm_depth = Column(Float)
+
+    surface_temperature = Column(Float)
