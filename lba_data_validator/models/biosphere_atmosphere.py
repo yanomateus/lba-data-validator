@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Column, Integer, Float, DateTime
+from sqlalchemy import Column, Integer, Float, DateTime, String, Numeric
 
 from .meta import Base
 
@@ -8,6 +8,17 @@ from .meta import Base
 class CreatedUpdateMixin:
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow)
+
+
+class BiosphereAtmosphereVariable(Base):
+    __tablename__ = 'biosphere_atmosphere_variable'
+
+    name = Column(String, nullable=False)
+    minimum_value = Column(Numeric)
+    maximum_value = Column(Numeric)
+
+    def __repl__(self):
+        return f'<{self.name}>'
 
 
 class BiosphereAtmosphereRead(Base, CreatedUpdateMixin):
