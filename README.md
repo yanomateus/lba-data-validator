@@ -1,43 +1,21 @@
 LBA Data Validator
 ==================
 
-Getting Started
----------------
 
-- Change directory into your newly created project.
+how to contribute
+-----------------
 
-    cd lba_data_validator
+Install system requirements (if you don't have them already):
+1. PostgreSQL 10.9+
+2. Python 3.6+
 
-- Create a Python virtual environment.
+Create a development database:
+```bash
+psql>>> CREATE ROLE dev WITH LOGIN PASSWORD 'dev';
+psql>>> CREATE DATABASE lba OWNER dev;
+```
 
-    python3 -m venv env
-
-- Upgrade packaging tools.
-
-    env/bin/pip install --upgrade pip setuptools
-
-- Install the project in editable mode with its testing requirements.
-
-    env/bin/pip install -e ".[testing]"
-
-- Initialize and upgrade the database using Alembic.
-
-    - Generate your first revision.
-
-        env/bin/alembic -c development.ini revision --autogenerate -m "init"
-
-    - Upgrade to that revision.
-
-        env/bin/alembic -c development.ini upgrade head
-
-- Load default data into the database using a script.
-
-    env/bin/initialize_lba_data_validator_db development.ini
-
-- Run your project's tests.
-
-    env/bin/pytest
-
-- Run your project.
-
-    env/bin/pserve development.ini
+In a virtual environment, install the project's dependencies:
+```bash
+(venv) $ pip install -e ."[testing]"
+```
