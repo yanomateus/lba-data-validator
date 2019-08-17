@@ -5,7 +5,9 @@ import zope.sqlalchemy
 
 # import or define all models here to ensure they are attached to the
 # Base.metadata prior to any initialization routines
-from .biosphere_atmosphere import BiosphereAtmosphereRead  # flake8: noqa
+from .biosphere_atmosphere import BiosphereAtmosphereRead, BiosphereAtmosphereVariable  # flake8: noqa
+from .instrument import Instrument  # flake8: noqa
+from .tower import Tower  # flake8: noqa
 
 # run configure_mappers after defining all of the models to ensure
 # all relationships can be setup
@@ -68,6 +70,7 @@ def includeme(config):
     session_factory = get_session_factory(get_engine(settings))
     config.registry['dbsession_factory'] = session_factory
 
+    # todo:use pyramid-services to add database service layer
     # make request.dbsession available for use in Pyramid
     config.add_request_method(
         # r.tm is the transaction manager used by pyramid_tm
