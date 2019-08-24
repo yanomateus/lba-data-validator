@@ -1,7 +1,8 @@
 import click
 
 from pyramid.paster import get_appsettings
-from lba_data_validator.models import get_engine, get_session_factory, get_session
+from lba_data_validator.models import get_engine
+from lba_data_validator.models import get_session_factory, get_session
 from lba_data_validator.models.biosphere_atmosphere import BiosphereAtmosphereVariable
 
 
@@ -28,7 +29,8 @@ def list(ctx):
     click.echo('||  Name\t\t| Minimum Value\t\t\t| Maximum Value')
     click.echo('='*90)
     for variable in variables:
-        click.echo('||  {}\t\t| {}\t\t\t\t| {}'.format(variable.name, variable.minimum_value, variable.maximum_value))
+        click.echo('||  {}\t\t| {}\t\t\t\t| {}'.format(
+            variable.name, variable.minimum_value, variable.maximum_value))
     click.echo('='*90)
 
 
@@ -39,4 +41,3 @@ def create(name, minimum_value, maximum_value):
 
 if __name__ == '__main__':
     cli(obj={})
-
