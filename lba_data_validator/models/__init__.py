@@ -24,7 +24,7 @@ def get_session_factory(engine):
     return factory
 
 
-def get_tm_session(session_factory, transaction_manager):
+def get_session(session_factory, transaction_manager=None):
     """
     Get a ``sqlalchemy.orm.Session`` instance backed by a transaction.
 
@@ -46,9 +46,12 @@ def get_tm_session(session_factory, transaction_manager):
 
     """
     dbsession = session_factory()
-    zope.sqlalchemy.register(
-        dbsession, transaction_manager=transaction_manager)
-    return dbsession
+    if transaction_manager:
+        zope.sqlalchemy.register(
+            dbsession, transaction_manager=transaction_manager)
+        return dbsession
+    else:
+        return dbsession
 
 
 def includeme(config):
@@ -74,7 +77,7 @@ def includeme(config):
     # make request.dbsession available for use in Pyramid
     config.add_request_method(
         # r.tm is the transaction manager used by pyramid_tm
-        lambda r: get_tm_session(session_factory, r.tm),
+        lambda r: get_session(session_factory, r.tm),
         'dbsession',
         reify=True
     )
