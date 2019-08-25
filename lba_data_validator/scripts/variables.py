@@ -10,7 +10,7 @@ from lba_data_validator.models.biosphere_atmosphere \
 
 @click.group()
 @click.pass_context
-def cli(ctx):
+def cli(ctx, obj={}):
     settings = get_appsettings('development.ini')
 
     engine = get_engine(settings, prefix='sqlalchemy.')
@@ -68,6 +68,3 @@ def create(ctx, name, min_value, max_value):
 
     return
 
-
-if __name__ == '__main__':
-    cli(obj={})
