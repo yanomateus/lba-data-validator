@@ -21,6 +21,7 @@ requires = [
     'transaction',
     'zope.sqlalchemy',
     'psycopg2==2.8.3',
+    'click==7.0',
 ]
 
 tests_require = [
@@ -57,6 +58,7 @@ setup(
         ],
         'console_scripts': [
             'initialize_lba_data_validator_db=lba_data_validator.scripts.initialize_db:main',
+            'manage_variable=lba_data_validator.scripts.variables:cli',
         ],
     },
 )
