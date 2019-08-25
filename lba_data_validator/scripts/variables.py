@@ -1,9 +1,11 @@
 import click
 
+from sqlalchemy.exc import DBAPIError
 from pyramid.paster import get_appsettings
 from lba_data_validator.models import get_engine
 from lba_data_validator.models import get_session_factory, get_session
-from lba_data_validator.models.biosphere_atmosphere import BiosphereAtmosphereVariable
+from lba_data_validator.models.biosphere_atmosphere \
+    import BiosphereAtmosphereVariable
 
 
 @click.group()
@@ -34,9 +36,37 @@ def list(ctx):
     click.echo('='*90)
 
 
-@click.command()
-def create(name, minimum_value, maximum_value):
-    click.echo('Creating variable {}...'.format(name))
+@cli.command()
+@click.option('--max-value')
+@click.option('--min-value')
+@click.option('--name')
+@click.pass_context
+def create(ctx, name, min_value, max_value):
+
+    try:
+        click.echo('Creating variable {}...'.format(name))
+        dbsession = ctx.obj['dbsession']
+        variable = BiosphereAtmosphereVariable(name=name,
+                                               minimum_value=min_value,
+                                               maximum_value=max_value)
+        dbsession.add(variable)
+        dbsession.flush()
+
+    except DBAPIError as e:
+
+        click.echo('Error: Database error has occured! Raised {}'
+                   .format(e.__class__.__name__))
+
+        dbsession.close()
+
+        return
+
+    dbsession.commit()
+    dbsession.close()
+
+    click.echo('Variable {} successfully created'.format(name))
+
+    return
 
 
 if __name__ == '__main__':
