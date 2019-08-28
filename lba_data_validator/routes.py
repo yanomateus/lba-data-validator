@@ -9,4 +9,3 @@ def includeme(config):
     config.add_view(authors_view, route_name='authors', renderer="json")
 
     config.add_route('data', '/data')
-    config.add_view(data_view, route_name='data')
