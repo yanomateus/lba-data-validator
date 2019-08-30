@@ -5,10 +5,13 @@
 {% endblock %}
 
 {% block body_content %}
-    <form>
+    <form action="/data" method="POST" enctype="multipart/form-data">
         <div class="form-group">
-            <label for="exampleFormControlFile1">Load fimplemntile</label>
-            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+            <label for="exampleFormControlFile1">Load file implement file </label>
+            <input type="file" class="form-control-file" name="data_file" id="exampleFormControlFile1">
+        </div>
+        <div>
+              <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
 
